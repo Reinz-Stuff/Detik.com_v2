@@ -11,7 +11,7 @@ def home():
 
 
 @app.route('/detik-populer')
-def scrape_code():
+def detik_populer():
     link = 'https://www.detik.com/terpopuler'
     url = requests.get(link)
     soup = BeautifulSoup(url.text, 'html.parser')
@@ -22,6 +22,13 @@ def scrape_code():
     image = list_news.findAll(attrs={'class': 'media__image'})
 
     return render_template('index.html', images=image)
+
+
+@app.route('/idr-rates')
+def idr_rates():
+    source = requests.get('http://www.floatrates.com/daily/idr.json')
+    json_data = source.json()
+    return render_template('index.html', datas=json_data.value())
 
 
 if __name__ == '__main__':
